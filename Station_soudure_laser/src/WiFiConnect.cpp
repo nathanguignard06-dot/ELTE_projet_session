@@ -1,18 +1,24 @@
 #include "WiFiConnect.hpp"
 
-WiFiConnect::WiFiConnect(char ssid[], char pass[]): SSID(ssid), PASS(pass) {}
+WiFiConnect::WiFiConnect(char* ssid): SSID(ssid) {}
 
-void WiFiConnect::init()
+int32_t WiFiConnect::getWiFiChannel(const char* ssid)
 {
-    Serial.print("Connexion au WiFi ");
-    Serial.println(SSID);
+    if (int32_t n = WiFi.scanNetworks()) {
+      for (uint8_t i=0; i<n; i++) {
+          if (!strcmp(ssid, WiFi.SSID(i).c_str())) {
+              return WiFi.channel(i);
+          }
+      }
+  }
+  return 0;
+}
 
-    while (WiFi.begin(SSID, PASS) != WL_CONNECTED) 
-    {
-        delay(2000);
-    }
+int32_t WiFiConnect::init()
+{
+    WiFi.mode(WIFI_STA);
 
-    Serial.println("WiFi connecte !");
-    Serial.print("adresse IP : ");
-    Serial.println(WiFi.localIP());
+    CHANNEL = getWiFiChannel(SSID);
+
+    return CHANNEL;
 }

@@ -8,14 +8,15 @@ class WiFiConnect
 {
     public:
 
-        WiFiConnect(char ssid[], char pass[]);
+        WiFiConnect(char* ssid);
 
-        void init();
+        int32_t init();
+        int32_t getWiFiChannel(const char* ssid);
 
     private:
 
-        String SSID;
-        String PASS;
+        const char* SSID;
+        int32_t CHANNEL;
 };
 
 #endif
