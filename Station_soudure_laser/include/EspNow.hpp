@@ -7,18 +7,20 @@ class EspNow
 {
     public:
 
-        EspNow(uint8_t broadcastAddress, esp_now_peer_info_t peer);
+        EspNow() { instance = this; }
 
         void init();
-        void peer(esp_now_peer_info_t peer, uint8_t broadcastAddress);
+        void peer(const uint8_t mac[6]);
         void receiveCallBack();
         
     private:
         
-        const uint8_t BROADCAST_ADDRESS;
         esp_now_peer_info_t peerInfo;
+        static EspNow* instance;
     
-        void OnDataSent(const uint8_t* mac_addr, esp_now_send_status_t status);
-};      
+        static void OnDataSent(const uint8_t* mac_addr, esp_now_send_status_t status);
+};
+
+EspNow* EspNow::instance = nullptr;
 
 #endif

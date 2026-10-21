@@ -1,7 +1,5 @@
 #include "EspNow.hpp"
 
-EspNow::EspNow(uint8_t broadcastAddress, esp_now_peer_info_t peer): BROADCAST_ADDRESS(broadcastAddress), peerInfo(peer) {}
-
 void EspNow::init()
 {
     if (esp_now_init() != ESP_OK) 
@@ -11,10 +9,11 @@ void EspNow::init()
     }
 }
 
-void EspNow::peer(esp_now_peer_info_t peer, uint8_t broadcastAddress)
+void EspNow::peer(const uint8_t mac[6])
 {
-    memcpy(peerInfo.peer_addr, BROADCAST_ADDRESS, 6);
-    peerInfo.channel = 0;  
+    memset(&peerInfo, 0, sizeof(peerInfo));
+    memcpy(peerInfo.peer_addr, mac, 6);
+    peerInfo.channel = 0;
     peerInfo.encrypt = false;
 
     if(esp_now_add_peer(&peerInfo) != ESP_OK)
