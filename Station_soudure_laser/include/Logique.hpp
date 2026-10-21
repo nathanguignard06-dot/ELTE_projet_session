@@ -12,9 +12,9 @@ class Logique
 {
     public:
 
-        Logique(CreateSlave slave);
+        Logique(CreateSlave& slave);
 
-        TypeSortie entryExitDef(int entryData, int exitData);
+        TypeSortie entryExitDef();
         int peopleCounter(TypeSortie type);
 
     private:

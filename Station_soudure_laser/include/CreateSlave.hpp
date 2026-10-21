@@ -7,7 +7,7 @@ class CreateSlave
 {
     public:
 
-        CreateSlave(int pinLaser1, int pinLazer2);
+        CreateSlave(int pinLaser1, int pinLaser2);
 
         void begin();
         bool readLaserEntry();
