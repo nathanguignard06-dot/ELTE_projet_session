@@ -20,5 +20,9 @@ int32_t WiFiConnect::init()
 
     CHANNEL = getWiFiChannel(SSID);
 
-    return CHANNEL;
+    //WiFi.printDiag(Serial); // Uncomment to verify channel number before
+    esp_wifi_set_promiscuous(true);
+    esp_wifi_set_channel(CHANNEL, WIFI_SECOND_CHAN_NONE);
+    esp_wifi_set_promiscuous(false);
+    //WiFi.printDiag(Serial); // Uncomment to verify channel change after
 }

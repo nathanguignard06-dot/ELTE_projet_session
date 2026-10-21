@@ -1,8 +1,10 @@
 #ifndef DEF_WIFICONNECT
 #define DEF_WIFICONNECT
 
-#include <Arduino.h>
+#include "Logique.hpp"
 #include <WiFi.h>
+#include <esp_now.h>
+#include <esp_wifi.h>
 
 class WiFiConnect
 {
