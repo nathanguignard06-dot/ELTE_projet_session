@@ -1,5 +1,7 @@
 #include "EspNow.hpp"
 
+EspNow* EspNow::instance = nullptr;
+
 void EspNow::init()
 {
     if (esp_now_init() != ESP_OK) 
@@ -24,6 +26,14 @@ void EspNow::peer(const uint8_t mac[6])
 }
 
 void EspNow::OnDataSent(const uint8_t* mac_addr, esp_now_send_status_t status)
+{
+    if (instance != nullptr)
+    {
+        instance->handleSendStatus(mac_addr, status);
+    }
+}
+
+void EspNow::handleSendStatus(const uint8_t* mac_addr, esp_now_send_status_t status)
 {
     Serial.print("\r\nLast Packet Send Status:\t");
     Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
