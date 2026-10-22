@@ -13,7 +13,7 @@ class EspNow
         void peer(const uint8_t mac[6]);
         void receiveCallBack();
 
-        esp_err_t espSendMessage(const uint8_t mac[6], int peopleCount);
+        esp_err_t espSendMessage(const uint8_t mac[6], int32_t peopleCount);
         void verifySending();
         
     private:

@@ -44,9 +44,10 @@ void EspNow::receiveCallBack()
     esp_now_register_send_cb(OnDataSent);
 }
 
-esp_err_t EspNow::espSendMessage(const uint8_t mac[6], int peopleCount)
+esp_err_t EspNow::espSendMessage(const uint8_t mac[6], int32_t peopleCount)
 {
-    result = esp_now_send(mac, (uint8_t *) peopleCount, sizeof(peopleCount));
+    result = esp_now_send(mac, (uint8_t *) peopleCount, sizeof(int32_t));
+    return result;
 }
 
 void EspNow::verifySending()
