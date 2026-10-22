@@ -46,7 +46,8 @@ void EspNow::receiveCallBack()
 
 esp_err_t EspNow::espSendMessage(const uint8_t mac[6], int32_t peopleCount)
 {
-    result = esp_now_send(mac, (uint8_t *) peopleCount, sizeof(int32_t));
+    const uint8_t* payload = reinterpret_cast<const uint8_t*>(&peopleCount);
+    result = esp_now_send(mac, payload, sizeof(peopleCount));
     return result;
 }
 

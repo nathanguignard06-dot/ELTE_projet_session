@@ -14,7 +14,7 @@ class Logique
 
         Logique(CreateSlave& slave);
 
-        int peopleCounter();
+        int32_t peopleCounter();
         
         private:
         
@@ -22,7 +22,7 @@ class Logique
         
         bool readingLaser1;
         bool readingLaser2;
-        int peopleCount;
+        int32_t peopleCount;
         TypeSortie entryExitType;
         
         TypeSortie entryExitDef();

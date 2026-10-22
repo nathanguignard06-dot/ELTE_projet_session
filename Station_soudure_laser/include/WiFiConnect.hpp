@@ -10,15 +10,16 @@ class WiFiConnect
 {
     public:
 
-        WiFiConnect(char* ssid);
+        WiFiConnect(const char ssid[]);
 
         int32_t init();
-        int32_t getWiFiChannel(const char* ssid);
-
-    private:
-
+        
+        private:
+        
         const char* SSID;
         int32_t CHANNEL;
-};
+        
+        int32_t getWiFiChannel(const char* ssid);
+    };
 
 #endif

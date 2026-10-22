@@ -1,6 +1,6 @@
 #include "WiFiConnect.hpp"
 
-WiFiConnect::WiFiConnect(char* ssid): SSID(ssid) {}
+WiFiConnect::WiFiConnect(const char ssid[]): SSID(ssid) {}
 
 int32_t WiFiConnect::getWiFiChannel(const char* ssid)
 {

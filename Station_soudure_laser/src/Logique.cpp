@@ -29,7 +29,7 @@ TypeSortie Logique::entryExitDef()
     }
 }
 
-int Logique::peopleCounter()
+int32_t Logique::peopleCounter()
 {
     TypeSortie type = entryExitDef();
     peopleCount = 0;
