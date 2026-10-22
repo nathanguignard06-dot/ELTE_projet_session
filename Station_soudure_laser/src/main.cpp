@@ -42,4 +42,6 @@ void loop()
     
     espNow.espSendMessage(broadcastAddress, peopleCount);
     espNow.verifySending();
+
+    delay(2000);
 }
