@@ -14,17 +14,17 @@ class Logique
 
         Logique(CreateSlave& slave);
 
-        TypeSortie entryExitDef();
-        int peopleCounter(TypeSortie type);
-
-    private:
-
+        int peopleCounter();
+        
+        private:
+        
         CreateSlave& slaveLaser;
-
+        
         bool readingLaser1;
         bool readingLaser2;
         int peopleCount;
         TypeSortie entryExitType;
         
+        TypeSortie entryExitDef();
 };
 #endif

@@ -29,22 +29,21 @@ TypeSortie Logique::entryExitDef()
     }
 }
 
-int Logique::peopleCounter(TypeSortie type)
+int Logique::peopleCounter()
 {
-    TypeSortie typeLaser = type;
     peopleCount = 0;
 
-    if(typeLaser == TypeSortie::Enter)
+    if(entryExitType == TypeSortie::Enter)
     {
         peopleCount = 1;
         return peopleCount;
     }
-    else if(typeLaser == TypeSortie::Exit)
+    else if(entryExitType == TypeSortie::Exit)
     {
         peopleCount = -1;
         return peopleCount;
     }
-    else if(typeLaser == TypeSortie::InOut || typeLaser == TypeSortie::NoEntryExit)
+    else if(entryExitType == TypeSortie::InOut || entryExitType == TypeSortie::NoEntryExit)
     {
         peopleCount = 0;
         return peopleCount;

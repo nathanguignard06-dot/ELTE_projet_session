@@ -43,3 +43,20 @@ void EspNow::receiveCallBack()
 {
     esp_now_register_send_cb(OnDataSent);
 }
+
+esp_err_t EspNow::espSendMessage(const uint8_t mac[6], int peopleCount)
+{
+    result = esp_now_send(mac, (uint8_t *) peopleCount, sizeof(peopleCount));
+}
+
+void EspNow::verifySending()
+{
+    if(result == ESP_OK)
+    {
+        Serial.println("Sent with success");
+    }
+    else
+    {
+        Serial.println("Error sending the data");
+    }
+}
