@@ -6,23 +6,24 @@ TypeSortie Logique::entryExitDef()
 {
     readingLaser1 = slaveLaser.readLaserEntry();
     readingLaser2 = slaveLaser.readLaserExit();
+    unsigned long int timestamp = millis();
     
-    if(readingLaser1 == HIGH && readingLaser2 == LOW)
+    if(readingLaser1 == LOW && readingLaser2 == HIGH && timestamp < 500)
     {
         entryExitType = TypeSortie::Enter;
         return entryExitType;
     }
-    else if(readingLaser1 == LOW && readingLaser2 == HIGH)
+    else if(readingLaser1 == HIGH && readingLaser2 == LOW && timestamp < 500)
     {
         entryExitType = TypeSortie::Exit;
         return entryExitType;
     }
-    else if(readingLaser1 == HIGH && readingLaser2 == HIGH)
+    else if(readingLaser1 == LOW && readingLaser2 == LOW)
     {
         entryExitType = TypeSortie::InOut;
         return entryExitType;
     }
-    else if(readingLaser1 == LOW && readingLaser2 == LOW)
+    else if(readingLaser1 == HIGH && readingLaser2 == HIGH)
     {
         entryExitType = TypeSortie::NoEntryExit;
         return entryExitType;

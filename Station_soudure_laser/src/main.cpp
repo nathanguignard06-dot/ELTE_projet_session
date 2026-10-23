@@ -16,7 +16,9 @@ Logique     peopleCounter(laserSlave);
 WiFiConnect wifi(ssid);
 EspNow espNow;
 
-int32_t peopleCount = 0;
+int peopleCount = 0;
+const int interval = 1000;
+unsigned long int previousMillis = 0;
 
 void setup() 
 {
@@ -38,10 +40,17 @@ void setup()
 
 void loop() 
 {
-    peopleCount = peopleCounter.peopleCounter();    // lecture des capteur de laser et traitement (verifier si personne entre ou sort)
+    peopleCount += peopleCounter.peopleCounter();            // lecture des capteur de laser et traitement (verifier si personne entre ou sort)
     
-    espNow.espSendMessage(broadcastAddress, peopleCount);
-    espNow.verifySending();
+    //espNow.espSendMessage(broadcastAddress, peopleCount);   // envoie du message au master
+    //espNow.verifySending();                                 // verifier si l'envoie est correct
 
-    delay(2000);
+    unsigned long int currentMillis = millis();
+    if(currentMillis - previousMillis >= interval)
+    {
+        previousMillis = currentMillis;
+        
+        Serial.print("persone dans la piece : ");
+        Serial.println(peopleCount);
+    }
 }
