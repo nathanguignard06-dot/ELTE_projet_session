@@ -40,8 +40,12 @@ void setup()
 
 void loop() 
 {
-    peopleCount += peopleCounter.peopleCounter();            // lecture des capteur de laser et traitement (verifier si personne entre ou sort)
-    
+    int state = peopleCounter.peopleCounter();            // lecture des capteur de laser et traitement (verifier si personne entre ou sort)
+    if(state > 0 || state < 0)
+    {
+        peopleCount += state;
+        delay(1500);
+    }
     //espNow.espSendMessage(broadcastAddress, peopleCount);   // envoie du message au master
     //espNow.verifySending();                                 // verifier si l'envoie est correct
 

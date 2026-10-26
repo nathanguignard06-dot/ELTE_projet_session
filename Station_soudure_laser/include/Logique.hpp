@@ -14,7 +14,7 @@ class Logique
 
         Logique(CreateSlave& slave);
 
-        int32_t peopleCounter();
+        int peopleCounter();
         
         private:
         

@@ -32,21 +32,16 @@ TypeSortie Logique::entryExitDef()
 int Logique::peopleCounter()
 {
     TypeSortie type = entryExitDef();
-    peopleCount = 0;
-
-    if(type == TypeSortie::Enter)
+    
+    switch(type)
     {
-        peopleCount = 1;
-        return peopleCount;
-    }
-    else if(type == TypeSortie::Exit)
-    {
-        peopleCount = -1;
-        return peopleCount;
-    }
-    else if(type == TypeSortie::InOut || type == TypeSortie::NoEntryExit)
-    {
-        peopleCount = 0;
-        return peopleCount;
+        case TypeSortie::Enter:
+            return 1;
+        case TypeSortie::Exit:
+            return -1;
+        case TypeSortie::InOut:
+            return 0;
+        case TypeSortie::NoEntryExit:
+            return 0;
     }
 }
