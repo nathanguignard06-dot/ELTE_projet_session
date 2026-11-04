@@ -1,4 +1,4 @@
-#include "Logique.hpp"
+/*
 
 Logique::Logique(CreateSlave& slave) : slaveLaser(slave) {}
 
@@ -45,3 +45,4 @@ int Logique::peopleCounter()
             return 0;
     }
 }
+*/

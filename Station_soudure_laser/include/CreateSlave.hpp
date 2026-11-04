@@ -7,19 +7,16 @@ class CreateSlave
 {
     public:
 
-        CreateSlave(int pinLaser1, int pinLaser2);
+        CreateSlave(int pinLaser1);
 
         void begin();
         bool readLaserEntry();
-        bool readLaserExit();
 
     private:
 
         const int PIN_LASER1;
-        const int PIN_LASER2;
 
         bool EntryLaserData;
-        bool ExitLaserData;
 };
 
 #endif

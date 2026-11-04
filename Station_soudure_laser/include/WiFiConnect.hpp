@@ -1,7 +1,7 @@
 #ifndef DEF_WIFICONNECT
 #define DEF_WIFICONNECT
 
-#include "Logique.hpp"
+#include "CreateSlave.hpp"
 #include <WiFi.h>
 #include <esp_now.h>
 #include <esp_wifi.h>

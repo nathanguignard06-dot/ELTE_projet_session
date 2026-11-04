@@ -8,17 +8,14 @@ constexpr char ssid[] = "UNIFI_IDO2";
 
 // definition des pin de capteur laser
 const int ENTRY_LASER_PIN = 35;
-const int EXIT_LASER_PIN  = 34;
 
 // creation des objet
-CreateSlave laserSlave(ENTRY_LASER_PIN, EXIT_LASER_PIN);
-Logique     peopleCounter(laserSlave);
+CreateSlave laserSlave(ENTRY_LASER_PIN);
 WiFiConnect wifi(ssid);
 EspNow espNow;
 
-int peopleCount = 0;
-const int interval = 1000;
-unsigned long int previousMillis = 0;
+int laser1Reading = 0;
+int passing = 0;
 
 void setup() 
 {
@@ -40,21 +37,31 @@ void setup()
 
 void loop() 
 {
-    int state = peopleCounter.peopleCounter();            // lecture des capteur de laser et traitement (verifier si personne entre ou sort)
-    if(state > 0 || state < 0)
-    {
-        peopleCount += state;
-        delay(1500);
-    }
-    //espNow.espSendMessage(broadcastAddress, peopleCount);   // envoie du message au master
-    //espNow.verifySending();                                 // verifier si l'envoie est correct
+    laser1Reading = laserSlave.readLaserEntry();
 
-    unsigned long int currentMillis = millis();
-    if(currentMillis - previousMillis >= interval)
+    if(laser1Reading < 1)
     {
-        previousMillis = currentMillis;
-        
-        Serial.print("persone dans la piece : ");
-        Serial.println(peopleCount);
+        if(passing < 1)
+        {
+            passing = 1;
+
+            //espNow.espSendMessage(broadcastAddress, laser1Reading);
+            //espNow.verifySending();
+
+            Serial.println(laser1Reading);
+        }
     }
+    else if(laser1Reading > 0)
+    {
+        if(passing > 0)
+        {
+            passing = 0;
+
+            //espNow.espSendMessage(broadcastAddress, laser1Reading);
+            //espNow.verifySending();
+
+            Serial.println(laser1Reading);
+        }
+    }
+
 }
