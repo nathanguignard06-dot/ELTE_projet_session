@@ -1,11 +1,11 @@
-/*
+#include "Logique.hpp"
 
-Logique::Logique(CreateSlave& slave) : slaveLaser(slave) {}
+Logique::Logique(struct_message payload) : dataPayload(payload) {}
 
 TypeSortie Logique::entryExitDef()
 {
-    readingLaser1 = slaveLaser.readLaserEntry();
-    readingLaser2 = slaveLaser.readLaserExit();
+    readingLaser1 = dataPayload.entryLaserData;
+    readingLaser2 = dataPayload.exitLaserData;
     
     if(readingLaser1 == HIGH && readingLaser2 == LOW)
     {
@@ -45,4 +45,3 @@ int Logique::peopleCounter()
             return 0;
     }
 }
-*/

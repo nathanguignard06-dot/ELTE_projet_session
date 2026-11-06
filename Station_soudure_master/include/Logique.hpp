@@ -1,7 +1,8 @@
 #ifndef DEF_LOGIQUE
 #define DEF_LOGIQUE
 
-#include "CreateSlave.hpp"
+#include "CreateMaster.hpp"
+#include "msgPayload.hpp"
 
 enum class TypeSortie
 {
@@ -12,13 +13,13 @@ class Logique
 {
     public:
 
-        Logique(CreateSlave& slave);
+        Logique(struct_message payload);
 
         int peopleCounter();
         
         private:
         
-        CreateSlave& slaveLaser;
+        struct_message dataPayload;
         
         bool readingLaser1;
         bool readingLaser2;

@@ -7,14 +7,16 @@ class EspNow
 {
     public:
 
-        EspNow();
+        EspNow(struct_message payload);
 
         void init();
-        void registerRecvData();
+        /*void registerRecvData();*/
         
     private:
     
-        static void OnDataRecv(const uint8_t* mac_addr, const uint8_t *incomingData, int len);
+        void OnDataRecv(const uint8_t* mac_addr, const uint8_t *incomingData, int len);
+
+        struct_message& dataPayload;
 };
 
 #endif

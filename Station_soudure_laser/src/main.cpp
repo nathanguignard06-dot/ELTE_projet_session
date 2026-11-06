@@ -1,7 +1,7 @@
 #include "EspNow.hpp"
 
 // definition de l'addresse mac du esp master
-uint8_t broadcastAddress[] = {/*mac address esp master*/};
+uint8_t broadcastAddress[] = {0xB0, 0xA7, 0x32, 0x28, 0x1E, 0x40};
 
 // definition ssid wifi
 constexpr char ssid[] = "UNIFI_IDO2";
@@ -13,6 +13,7 @@ const int ENTRY_LASER_PIN = 35;
 CreateSlave laserSlave(ENTRY_LASER_PIN);
 WiFiConnect wifi(ssid);
 EspNow espNow;
+struct_message dataPayload;
 
 int laser1Reading = 0;
 int passing = 0;
@@ -44,11 +45,13 @@ void loop()
         if(passing < 1)
         {
             passing = 1;
+            
+            dataPayload.entryLaserData = laser1Reading;
 
-            //espNow.espSendMessage(broadcastAddress, laser1Reading);
-            //espNow.verifySending();
+            espNow.espSendMessage(broadcastAddress, dataPayload);
+            espNow.verifySending();
 
-            Serial.println(laser1Reading);
+            Serial.println(dataPayload.entryLaserData);
         }
     }
     else if(laser1Reading > 0)
@@ -57,11 +60,12 @@ void loop()
         {
             passing = 0;
 
-            //espNow.espSendMessage(broadcastAddress, laser1Reading);
-            //espNow.verifySending();
+            dataPayload.entryLaserData = laser1Reading;
 
-            Serial.println(laser1Reading);
+            espNow.espSendMessage(broadcastAddress, dataPayload);
+            espNow.verifySending();
+
+            Serial.println(dataPayload.entryLaserData);
         }
     }
-
 }

@@ -13,11 +13,13 @@ class WiFiConnect
         WiFiConnect(const char ssid[], const char pass[]);
 
         void init();
+        void getMac();
         
         private:
         
         const char* SSID;
         const char* PASS;
+        String mac;
     };
 
 #endif

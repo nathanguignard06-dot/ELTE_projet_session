@@ -2,6 +2,7 @@
 #define DEF_CREATESLAVE
 
 #include <Arduino.h>
+#include "msgPayload.hpp"
 
 class CreateSlave
 {
