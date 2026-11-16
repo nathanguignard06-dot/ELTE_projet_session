@@ -7,7 +7,7 @@ uint8_t broadcastAddress[] = {0xB0, 0xA7, 0x32, 0x28, 0x1E, 0x40};
 constexpr char ssid[] = "UNIFI_IDO2";
 
 // definition des pin de capteur laser
-const int ENTRY_LASER_PIN = 35;
+const int ENTRY_LASER_PIN = 39;
 
 // creation des objet
 CreateSlave laserSlave(ENTRY_LASER_PIN);
