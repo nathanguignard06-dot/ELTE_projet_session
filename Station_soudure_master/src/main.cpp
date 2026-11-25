@@ -1,41 +1,54 @@
-#include "EspNow.hpp"
+#include "include_all.h"
 
-constexpr char ssid[] = "UNIFI_IDO2";
-constexpr char pass[] = "#26ccNB!#";
-
+/*--- OBJECT INITIALISING ---*/
 struct_message dataPayload;
-CreateMaster master();
+CreateMaster master;
 Logique systemeLogique(dataPayload);
-WiFiConnect wifi(ssid, pass);
+WiFiConnect wifi("Station_Soudure_Setup");
 EspNow espNow(dataPayload);
 
-void OnDataRecv(const uint8_t* mac_addr, const uint8_t *incomingData, int len)
+/*--- GLOBAL VARIABLES ---*/
+bool applicationStarted     = false;   //to start app
+int baudRate                = 115200;  //serial baud rate
+
+//application initializer
+void startApplication()
 {
-  memcpy(&dataPayload, incomingData, sizeof(dataPayload));
-  Serial.print("Bytes received: ");
-  Serial.println(len);
-  Serial.println("-----------------");
-  Serial.print("entry laser value : ");
-  Serial.println(dataPayload.entryLaserData);
-  Serial.println("-----------------");
-  Serial.print("exit laser value : ");
-  Serial.println(dataPayload.exitLaserData);
-  Serial.println("-----------------");
+  Serial.println("[SYSTEM] Starting application...");
+
+  espNow.init();
+
+  applicationStarted = true;
+
+  Serial.println("[SYSTEM] Application started!");
 }
 
 void setup()
 {
-  Serial.begin(115200);
-  while(!Serial) {}
+  master.setupSerial(baudRate);
 
-  wifi.init();
-  wifi.getMac();
-  espNow.init();
-
-  esp_now_register_recv_cb(OnDataRecv);
+  if(wifi.begin())
+  {
+    Serial.println("[SYSTEM] WiFi ready");
+    startApplication();
+  }
 }
 
 void loop()
 {
-  
+  if(!applicationStarted)
+  {
+    wifi.handleClient();
+
+    //check if the user successfully configured WiFi
+    if(wifi.isConnected())
+    {
+      Serial.println("[SYSTEM] WiFi configured");
+      startApplication();
+    }
+  }
+  if(applicationStarted)
+  {
+    
+  }
 }

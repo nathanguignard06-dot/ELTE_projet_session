@@ -1,25 +1,38 @@
-#ifndef DEF_WIFICONNECT
-#define DEF_WIFICONNECT
+#ifndef WIFICONNECT
+#define WIFICONNECT
 
-#include "Logique.hpp"
+#include <Arduino.h>
 #include <WiFi.h>
-#include <esp_now.h>
-#include <esp_wifi.h>
+#include <WiFiClient.h>
+#include <WebServer.h>
+#include <Preferences.h>
+#include "CreateMaster.hpp"
 
 class WiFiConnect
 {
     public:
 
-        WiFiConnect(const char ssid[], const char pass[]);
+        WiFiConnect(const char ssidAP[]);
 
-        void init();
+        bool begin();
+
+        void wifiAPmode();
+        void getAPIP();
+        bool wifiConnectToRouter(const char ssid[], const char pass[]);
+        void handleClient();
+        bool isConnected();
         void getMac();
-        
-        private:
-        
-        const char* SSID;
-        const char* PASS;
-        String mac;
-    };
 
+    private:
+
+        const char* SSID_AP;        
+        IPAddress IP;
+        WebServer server;
+        Preferences preferences;
+        String mac;
+
+        void handleRoot();
+        void handleCredentials();
+
+};
 #endif

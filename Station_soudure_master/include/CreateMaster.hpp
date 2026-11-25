@@ -2,6 +2,7 @@
 #define DEF_CREATEMASTER
 
 #include <Arduino.h>
+#include "msgPayload.hpp"
 
 class CreateMaster
 {
@@ -10,6 +11,7 @@ class CreateMaster
         CreateMaster();
 
         void begin();
+        void setupSerial(int baud);
 
     private:
 
