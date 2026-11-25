@@ -2,10 +2,17 @@
 
 /*--- OBJECT INITIALISING ---*/
 struct_message dataPayload;
+
 CreateMaster master;
 Logique systemeLogique(dataPayload);
+
 WiFiConnect wifi("Station_Soudure_Setup");
 EspNow espNow(dataPayload);
+
+WiFiClient networkClient;
+MqttClient client(networkClient);
+MqttCommunication mqtt(broker, port, client);
+
 
 /*--- GLOBAL VARIABLES ---*/
 bool applicationStarted     = false;   //to start app
@@ -17,6 +24,7 @@ void startApplication()
   Serial.println("[SYSTEM] Starting application...");
 
   espNow.init();
+  mqtt.begin();
 
   applicationStarted = true;
 
@@ -49,6 +57,8 @@ void loop()
   }
   if(applicationStarted)
   {
-    
+    mqtt.poll();
+
+    //not used for firt test
   }
 }

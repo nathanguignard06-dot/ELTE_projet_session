@@ -13,5 +13,7 @@
 #include "Logique.hpp"
 #include "WiFiConnect.hpp"
 #include "EspNow.hpp"
+#include "MqttCommunication.hpp"
+#include "secrets.h"
 
 #endif
