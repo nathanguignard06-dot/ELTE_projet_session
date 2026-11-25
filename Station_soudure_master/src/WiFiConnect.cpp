@@ -182,3 +182,10 @@ bool WiFiConnect::isConnected()
 {
     return WiFi.status() == WL_CONNECTED;
 }
+
+void WiFiConnect::getMac()
+{
+    mac = WiFi.macAddress();
+    Serial.print("MAC address : ");
+    Serial.println(mac);
+}

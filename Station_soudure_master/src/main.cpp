@@ -15,8 +15,14 @@ MqttCommunication mqtt(broker, port, client);
 
 
 /*--- GLOBAL VARIABLES ---*/
-bool applicationStarted     = false;   //to start app
-int baudRate                = 115200;  //serial baud rate
+bool applicationStarted      = false;   //to start app
+
+int baudRate                 = 115200;  //serial baud rate
+
+int peopleCount              = 0;
+
+unsigned long previousMillis = 0;
+int interval                 = 1000;
 
 //application initializer
 void startApplication()
@@ -25,6 +31,7 @@ void startApplication()
 
   espNow.init();
   mqtt.begin();
+  wifi.getMac();
 
   applicationStarted = true;
 
@@ -59,6 +66,26 @@ void loop()
   {
     mqtt.poll();
 
-    //not used for firt test
+    peopleCount = systemeLogique.peopleCounter();
+
+    unsigned long currentMillis = millis();
+    if(currentMillis - previousMillis >= interval)
+    {
+      previousMillis = currentMillis;
+
+      JsonDocument doc;
+
+      doc["entryVal"]    = dataPayload.entryLaserData;
+      doc["exitVal"]     = dataPayload.exitLaserData;
+      doc["peopleCount"] = peopleCount;
+
+      String json;
+      serializeJson(doc, json);
+
+      Serial.println("\n[PAYLOAD]");
+      Serial.println(json);
+
+      mqtt.publish(json, MqttTopics::laserData);
+    }
   }
 }

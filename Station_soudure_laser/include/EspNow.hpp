@@ -22,8 +22,8 @@ class EspNow
         static EspNow* instance;
         esp_err_t result;
     
-        static void OnDataSent(const uint8_t* mac_addr, esp_now_send_status_t status);
-        void handleSendStatus(const uint8_t* mac_addr, esp_now_send_status_t status);
+        static void OnDataSent(const wifi_tx_info_t* tx_info, esp_now_send_status_t status);
+        void handleSendStatus(esp_now_send_status_t status);
 };
 
 #endif

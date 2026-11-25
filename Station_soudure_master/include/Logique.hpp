@@ -17,7 +17,7 @@ class Logique
 
         int peopleCounter();
         
-        private:
+    private:
         
         struct_message dataPayload;
         

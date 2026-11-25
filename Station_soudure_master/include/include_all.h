@@ -8,12 +8,14 @@
 #include <Preferences.h>
 #include <esp_now.h>
 #include <esp_wifi.h>
+#include <ArduinoJson.h>
 #include "msgPayload.hpp"
 #include "CreateMaster.hpp"
 #include "Logique.hpp"
 #include "WiFiConnect.hpp"
 #include "EspNow.hpp"
 #include "MqttCommunication.hpp"
+#include "MqttTopics.h"
 #include "secrets.h"
 
 #endif
