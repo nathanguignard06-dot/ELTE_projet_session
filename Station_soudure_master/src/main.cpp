@@ -22,7 +22,7 @@ int baudRate                 = 115200;  //serial baud rate
 int peopleCount              = 0;
 
 unsigned long previousMillis = 0;
-int interval                 = 1000;
+int interval                 = 5000;
 
 //application initializer
 void startApplication()

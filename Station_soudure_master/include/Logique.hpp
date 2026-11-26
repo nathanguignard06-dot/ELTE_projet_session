@@ -23,7 +23,6 @@ class Logique
         
         bool readingLaser1;
         bool readingLaser2;
-        int peopleCount;
         TypeSortie entryExitType;
         
         TypeSortie entryExitDef();

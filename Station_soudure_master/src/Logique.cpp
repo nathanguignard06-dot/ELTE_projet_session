@@ -36,17 +36,17 @@ int Logique::peopleCounter()
     switch(type)
     {
         case TypeSortie::Enter:
-            peopleCount = 1;
-            break;
+            return 1;
+            
         case TypeSortie::Exit:
-            peopleCount = -1;
-            break;
+            return -1;
+            
         case TypeSortie::InOut:
-            peopleCount = 0;
-            break;
+            return 0;
+            
         case TypeSortie::NoEntryExit:
-            peopleCount = 0;
-            break;
+            return 0;
+            
     }
     return peopleCount;
 }
