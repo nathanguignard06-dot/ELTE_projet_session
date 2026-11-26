@@ -62,7 +62,8 @@ void WiFiConnect::wifiAPmode()
 
     server.begin();
 
-    oled.screenSettings(1, 0, 25);
+    oled.clearScreen();
+    oled.screenSettings(1, 0, 16);
     Serial.println("[WIFI AP] Web server started");
     oled.print("Web server started");
     oled.displayScreen();
@@ -207,14 +208,14 @@ bool WiFiConnect::wifiConnectToRouter(const char ssid[], const char pass[])
     int timeout = 0;
 
     WiFi.begin(ssid, pass);
-    int j = 3;
     while(WiFi.status() != WL_CONNECTED)
     {
+        int j = 3;
         delay(500);
         Serial.print(".");
         for(int i = 0; i < 3; i++)
         {
-            oled.screenSettings(1, i + j++, 16);
+            oled.screenSettings(1, i + j++, 30);
             oled.print(".");
             oled.displayScreen();
         }
@@ -233,6 +234,7 @@ bool WiFiConnect::wifiConnectToRouter(const char ssid[], const char pass[])
             Serial.println("\n[ERROR] WiFi connection timeout");
             oled.print("WiFi connection timeout");
             oled.displayScreen();
+            delay(1000);
             WiFi.disconnect(false, false);
             return false;
         }
@@ -249,6 +251,8 @@ bool WiFiConnect::wifiConnectToRouter(const char ssid[], const char pass[])
     oled.screenSettings(1, 0, 30);
     oled.print(WiFi.localIP().toString());
     oled.displayScreen();
+    delay(1000);
+    oled.clearScreen();
 
     return true;
 }

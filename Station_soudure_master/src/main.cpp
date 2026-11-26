@@ -67,10 +67,13 @@ void loop()
     if(wifi.isConnected())
     {
       oled.clearScreen();
-      oled.screenSettings(1, 0, 16);
+      oled.screenSettings(1, 0, 6);
       Serial.println("[SYSTEM] WiFi configured!");
       oled.print("WiFi configured!");
+      oled.screenSettings(1, 0, 16);
+      oled.print("Starting application");
       oled.displayScreen();
+      delay(1000);
 
       startApplication();
     }
@@ -78,6 +81,7 @@ void loop()
   if(applicationStarted)
   {
     oled.clearScreen();
+    oled.displayScreen();
 
     mqtt.poll();
 
