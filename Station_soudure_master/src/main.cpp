@@ -47,7 +47,9 @@ void startApplication()
 void setup()
 {
   master.begin();
-  
+
+  delay(1000);
+
   if(wifi.begin())
   {
     Serial.println("[SYSTEM] WiFi ready");
@@ -65,9 +67,10 @@ void loop()
     if(wifi.isConnected())
     {
       oled.clearScreen();
-      oled.screenSettings(1, 0, 10);
+      oled.screenSettings(1, 0, 16);
       Serial.println("[SYSTEM] WiFi configured!");
-      oled.print("[SYSTEM] WiFi configured!");
+      oled.print("WiFi configured!");
+      oled.displayScreen();
 
       startApplication();
     }

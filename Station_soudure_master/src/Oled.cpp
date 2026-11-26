@@ -19,7 +19,7 @@ bool Oled::begin()
 void Oled::startScreen()
 {
     clearScreen();
-    screenSettings(1, 0, 10);
+    screenSettings(1, 0, 16);
     print("Oled Ready!");
     displayScreen();
 }
