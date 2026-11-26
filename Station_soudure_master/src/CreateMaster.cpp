@@ -1,12 +1,23 @@
 #include "CreateMaster.hpp"
 
-CreateMaster::CreateMaster() {}
+CreateMaster::CreateMaster(Oled& screen, int baud) : oled(screen), SERIAL_BAUD_R8(baud) {}
 
-void CreateMaster::begin() {}       //empty for now because no current pins used
+void CreateMaster::begin()
+{
+    setupSerial(SERIAL_BAUD_R8);
+    if(!oled.begin())
+    {
+        Serial.println("[OLED] Restarting allocation");
+        oled.begin();
+    }
+    
+    oled.startScreen();
+}
 
 void CreateMaster::setupSerial(int baud)
 {
     Serial.begin(baud);
     while(!Serial) {}
-    Serial.println("\n[SERIAL] Serial communication for debug active.\n");
+
+    Serial.println("[SERIAL] Serial monitor for debug ready\n");
 }

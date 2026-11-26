@@ -3,6 +3,7 @@
 
 #include "WiFiConnect.hpp"
 #include <ArduinoMqttClient.h>
+#include "MqttTopics.h"
 
 class MqttCommunication
 {

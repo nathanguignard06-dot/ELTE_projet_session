@@ -7,5 +7,6 @@ namespace MqttTopics
     const char laserData[]      = "laser/entry/exit/data";
 
     //receiving topics
+
 }
 #endif

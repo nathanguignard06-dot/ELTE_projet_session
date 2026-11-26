@@ -46,7 +46,8 @@ int Logique::peopleCounter()
             
         case TypeSortie::NoEntryExit:
             return 0;
-            
+
+        default:
+            return 0;
     }
-    return peopleCount;
 }

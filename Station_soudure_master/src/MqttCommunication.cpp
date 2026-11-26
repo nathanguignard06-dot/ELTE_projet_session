@@ -24,7 +24,7 @@ bool MqttCommunication::begin()
 
 void MqttCommunication::subscribeToTopics()
 {
-    mqttClient.subscribe("light/control/#");
+    mqttClient.subscribe(MqttTopics::laserData);
 }
 
 void MqttCommunication::onMessage()

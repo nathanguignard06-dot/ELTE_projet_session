@@ -10,6 +10,7 @@
 #include <esp_wifi.h>
 #include <ArduinoJson.h>
 #include "msgPayload.hpp"
+#include "Oled.hpp"
 #include "CreateMaster.hpp"
 #include "Logique.hpp"
 #include "WiFiConnect.hpp"

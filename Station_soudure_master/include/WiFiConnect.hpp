@@ -7,12 +7,13 @@
 #include <WebServer.h>
 #include <Preferences.h>
 #include "CreateMaster.hpp"
+#include "Oled.hpp"
 
 class WiFiConnect
 {
     public:
 
-        WiFiConnect(const char ssidAP[]);
+        WiFiConnect(const char ssidAP[], Oled& screen);
 
         bool begin();
 
@@ -30,6 +31,7 @@ class WiFiConnect
         WebServer server;
         Preferences preferences;
         String mac;
+        Oled& oled;
 
         void handleRoot();
         void handleCredentials();

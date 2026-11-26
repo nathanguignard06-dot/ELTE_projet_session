@@ -46,12 +46,12 @@ void Oled::print(int value)
     oled.println(value);
 }
 
-void Oled::print(float value, int decimals = 2)
+void Oled::print(float value, int decimals)
 {
     oled.println(value, decimals);
 }
 
-void Oled::print(double value, int decimals = 2)
+void Oled::print(double value, int decimals)
 {
     oled.println(value, decimals);
 }

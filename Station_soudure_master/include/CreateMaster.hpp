@@ -3,18 +3,22 @@
 
 #include <Arduino.h>
 #include "msgPayload.hpp"
+#include "Oled.hpp"
 
 class CreateMaster
 {
     public:
 
-        CreateMaster();
+        CreateMaster(Oled& screen, int baud);
 
         void begin();
-        void setupSerial(int baud);
-
+        
     private:
+        
+        const int SERIAL_BAUD_R8;
+        Oled& oled;
 
+        void setupSerial(int baud);
 };
 
 #endif
