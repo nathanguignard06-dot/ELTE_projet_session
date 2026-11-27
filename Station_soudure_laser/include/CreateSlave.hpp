@@ -12,8 +12,9 @@ class CreateSlave
          * @brief Constructeur de l'objet pour le laser d'entrer
          * 
          * @param int pinLaser : Broche du capteur laser
+         * @param int baud     : Baud rate du moniteur Serial
          */
-        CreateSlave(int pinLaser1);
+        CreateSlave(int pinLaser1, int baud);
 
 
         /**
@@ -31,8 +32,15 @@ class CreateSlave
     private:
 
         const int PIN_LASER1;
-
+        const int SERIAL_BAUD;
         bool EntryLaserData;
+
+        /**
+         * @brief Fonction pour commencer moniteur Serial
+         * 
+         * @param int baud : Baud rate du moniteur Serial
+         */
+        void initSerial(int baud);
 };
 
 #endif

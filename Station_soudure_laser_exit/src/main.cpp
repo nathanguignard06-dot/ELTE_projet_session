@@ -1,33 +1,27 @@
 #include "EspNow.hpp"
+#include "secrets.h"
 
-// definition de l'addresse mac du esp master
-uint8_t broadcastAddress[] = {0xB0, 0xA7, 0x32, 0x28, 0x1E, 0x40};
+/*--- DEFINITIONS ---*/
+#define EXIT_LASER_PIN 39
+#define SERIAL_BAUD     115200
 
-// definition ssid wifi
-constexpr char ssid[] = "UNIFI_IDO2";
-
-// definition des pin de capteur laser
-const int ENTRY_LASER_PIN = 39;
-
-// creation des objet
-CreateSlave laserSlave(ENTRY_LASER_PIN);
+/*--- DECLARATIONS ---*/
+CreateSlave laserSlave(EXIT_LASER_PIN, SERIAL_BAUD);
 WiFiConnect wifi(ssid);
 EspNow espNow;
 struct_message dataPayload;
 
-int laser1Reading = 0;
+/*--- GLOBAL VARIABLES ---*/
+int laser2Reading = 0;
 int passing = 0;
 
 void setup() 
 {
-    Serial.begin(115200);           // initialisation comm serial (debug)
-    while(!Serial) {}               // attendre que moniteur serial ouvre
+    laserSlave.begin();             // initialisation de l'objet et moniteur Serial
 
     wifi.init();                    // initialisation wifi
 
     espNow.init();                  // initialisation esp-now
-
-    laserSlave.begin();             // initialisation du slave
 
     espNow.receiveCallBack();       // recevoir les donnees du callback (du master)
 
@@ -38,34 +32,34 @@ void setup()
 
 void loop() 
 {
-    laser1Reading = laserSlave.readLaserEntry();
+    laser2Reading = laserSlave.readLaserEntry();    // lecture du capteur laser
 
-    if(laser1Reading < 1)
+    if(laser2Reading < 1)   // pour envoyer une fois a chaque changement
     {
         if(passing < 1)
         {
             passing = 1;
-            
-            dataPayload.exitLaserData = laser1Reading;
-
-            espNow.espSendMessage(broadcastAddress, dataPayload);
+                
+            dataPayload.exitLaserData = laser2Reading; // stocker la valeur dans le payload
+    
+            espNow.espSendMessage(broadcastAddress, dataPayload);   //envoie du payload au master
             espNow.verifySending();
-
-            Serial.println(dataPayload.exitLaserData);
+    
+            Serial.println(dataPayload.exitLaserData); // debug
         }
     }
-    else if(laser1Reading > 0)
+    else if(laser2Reading > 0)
     {
         if(passing > 0)
         {
             passing = 0;
-
-            dataPayload.exitLaserData = laser1Reading;
-
-            espNow.espSendMessage(broadcastAddress, dataPayload);
+    
+            dataPayload.exitLaserData = laser2Reading; // stocker la valeur dans le payload
+    
+            espNow.espSendMessage(broadcastAddress, dataPayload);   // envoie du payload
             espNow.verifySending();
-
-            Serial.println(dataPayload.exitLaserData);
+    
+            Serial.println(dataPayload.exitLaserData); // debug
         }
     }
 }

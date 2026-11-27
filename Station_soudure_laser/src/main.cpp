@@ -1,30 +1,27 @@
 #include "EspNow.hpp"
 #include "secrets.h"
 
-// definition des pin de capteur laser
-const int ENTRY_LASER_PIN = 39;
+/*--- DEFINITIONS ---*/
+#define ENTRY_LASER_PIN 39
+#define SERIAL_BAUD     115200
 
-// creation des objet
-CreateSlave laserSlave(ENTRY_LASER_PIN);
+/*--- DECLARATIONS ---*/
+CreateSlave laserSlave(ENTRY_LASER_PIN, SERIAL_BAUD);
 WiFiConnect wifi(ssid);
 EspNow espNow;
 struct_message dataPayload;
 
+/*--- GLOBAL VARIABLES ---*/
 int laser1Reading = 0;
 int passing = 0;
-unsigned long previousMillis = 0;
-int interval = 5000;
 
 void setup() 
 {
-    Serial.begin(115200);           // initialisation comm serial (debug)
-    while(!Serial) {}               // attendre que moniteur serial ouvre
+    laserSlave.begin();             // initialisation de l'objet et moniteur Serial
 
     wifi.init();                    // initialisation wifi
 
     espNow.init();                  // initialisation esp-now
-
-    laserSlave.begin();             // initialisation du slave
 
     espNow.receiveCallBack();       // recevoir les donnees du callback (du master)
 
@@ -35,40 +32,34 @@ void setup()
 
 void loop() 
 {
-    //laser1Reading = laserSlave.readLaserEntry();
+    laser1Reading = laserSlave.readLaserEntry();    // lecture du capteur laser
 
-    unsigned long currentMillis = millis();
-    if(currentMillis - previousMillis >= interval)
+    if(laser1Reading < 1)   // pour envoyer une fois a chaque changement
     {
-        previousMillis = currentMillis;
-
-        if(laser1Reading < 1)
+        if(passing < 1)
         {
-            if(passing < 1)
-            {
-                passing = 1;
+            passing = 1;
                 
-                dataPayload.entryLaserData = laser1Reading;
+            dataPayload.entryLaserData = laser1Reading; // stocker la valeur dans le payload
     
-                espNow.espSendMessage(broadcastAddress, dataPayload);
-                espNow.verifySending();
+            espNow.espSendMessage(broadcastAddress, dataPayload);   //envoie du payload au master
+            espNow.verifySending();
     
-                Serial.println(dataPayload.entryLaserData);
-            }
+            Serial.println(dataPayload.entryLaserData); // debug
         }
-        else if(laser1Reading > 0)
+    }
+    else if(laser1Reading > 0)
+    {
+        if(passing > 0)
         {
-            if(passing > 0)
-            {
-                passing = 0;
+            passing = 0;
     
-                dataPayload.entryLaserData = laser1Reading;
+            dataPayload.entryLaserData = laser1Reading; // stocker la valeur dans le payload
     
-                espNow.espSendMessage(broadcastAddress, dataPayload);
-                espNow.verifySending();
+            espNow.espSendMessage(broadcastAddress, dataPayload);   // envoie du payload
+            espNow.verifySending();
     
-                Serial.println(dataPayload.entryLaserData);
-            }
+            Serial.println(dataPayload.entryLaserData); // debug
         }
     }
 }
