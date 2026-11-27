@@ -38,44 +38,9 @@ void loop()
     //laser1Reading = laserSlave.readLaserEntry();
 
     unsigned long currentMillis = millis();
-    if(currentMillis - previousMillis >= interval && laser1Reading > 0)
+    if(currentMillis - previousMillis >= interval)
     {
         previousMillis = currentMillis;
-        laser1Reading = 0;
-
-        if(laser1Reading < 1)
-        {
-            if(passing < 1)
-            {
-                passing = 1;
-                
-                dataPayload.entryLaserData = laser1Reading;
-    
-                espNow.espSendMessage(broadcastAddress, dataPayload);
-                espNow.verifySending();
-    
-                Serial.println(dataPayload.entryLaserData);
-            }
-        }
-        else if(laser1Reading > 0)
-        {
-            if(passing > 0)
-            {
-                passing = 0;
-    
-                dataPayload.entryLaserData = laser1Reading;
-    
-                espNow.espSendMessage(broadcastAddress, dataPayload);
-                espNow.verifySending();
-    
-                Serial.println(dataPayload.entryLaserData);
-            }
-        }
-    }
-    else if(currentMillis - previousMillis >= interval && laser1Reading < 1)
-    {
-        previousMillis = currentMillis;
-        laser1Reading = 1;
 
         if(laser1Reading < 1)
         {

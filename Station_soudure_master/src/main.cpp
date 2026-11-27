@@ -86,6 +86,8 @@ void loop()
     mqtt.poll();
 
     peopleCount = systemeLogique.peopleCounter();
+    int entryLaser = dataPayload.entryLaserData;
+    int exitLaser = dataPayload.exitLaserData;
 
     unsigned long currentMillis = millis();
     if(currentMillis - previousMillis >= interval)
@@ -94,8 +96,8 @@ void loop()
 
       JsonDocument doc;
 
-      doc["entryVal"]    = dataPayload.entryLaserData;
-      doc["exitVal"]     = dataPayload.exitLaserData;
+      doc["entryVal"]    = entryLaser;
+      doc["exitVal"]     = exitLaser;
       doc["peopleCount"] = peopleCount;
 
       String json;
